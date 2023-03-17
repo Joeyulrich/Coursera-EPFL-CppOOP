@@ -5,18 +5,30 @@ using namespace std;
 
 int distance(int x, int y)
 {
-	return abs(x - y);
+  return abs(x - y);
 }
 
 class Creature
 {
-	/*****************************************************
-	 * Compléter le code à partir d'ici
-	 *****************************************************/
+  /*****************************************************
+   * ComplÃ©ter le code Ã  partir d'ici
+   *****************************************************/
+
+         /*<< ", niveau: "
+         << ", points de vie: "
+         << ", force: "
+         << ", points d'attaque: "
+         << ", position: "
+
+         << " n'est plus !"*/
+
+
 protected:
 	const string nom;
 	int niveau, points_de_vie_, force_, position_;
+
 public:
+
 	Creature(const string n, int ni, int p, int f, int po = 0) : nom(n), niveau(ni), points_de_vie_(p), force_(f), position_(po) {}
 
 	bool vivant() const
@@ -24,23 +36,30 @@ public:
 		if (points_de_vie_ > 0) return true;
 		else return false;
 	}
+
 	int points_attaque() const
 	{
 		if (vivant() == true) return niveau * force_;
 		else return 0;
 	}
+
 	void deplacer(int x)
+  { if (vivant())
 	{
 		position_ += x;
 	}
+  }
+
 	void adieux() const
 	{
 		cout << nom << " n'est plus !" << endl;
 	}
+
 	int position() const
 	{
 		return position_;
 	}
+
 	void faiblir(int x)
 	{
 		if (vivant() == true)
@@ -57,11 +76,13 @@ public:
 			adieux();
 		}
 	}
+
 	void afficher() const
 	{
 		cout << nom << ", niveau: " << niveau << ", points de vie: " << points_de_vie_ << ", force: " << force_ << ", points d'attaque: " << points_attaque() << ", position: " << position_ << endl;
 	}
 };
+
 class Dragon : public Creature
 {
 private:
@@ -69,9 +90,11 @@ private:
 public:
 	Dragon(const string n, int ni, int p, int f, int pf, int po = 0) : portee_flamme_(pf), Creature(n, ni, p, f, po) {}
 	void voler(int pos)
+  { if (vivant())
 	{
 		deplacer(pos);
 	}
+  }
 	void souffle_sur(Creature& bete)
 	{
 		int d = distance(bete.position(), this->position());
@@ -118,83 +141,83 @@ void combat(Dragon& d, Hydre& h)
 	d.souffle_sur(h);
 }
 /*******************************************
- * Ne rien modifier après cette ligne.
+ * Ne rien modifier aprÃ¨s cette ligne.
  *******************************************/
 int main()
 {
-	Dragon dragon("Dragon rouge", 2, 10, 3, 20);
-	Hydre  hydre("Hydre maléfique", 2, 10, 1, 10, 1, 42);
+  Dragon dragon("Dragon rouge"   , 2, 10, 3, 20         );
+  Hydre  hydre ("Hydre malÃ©fique", 2, 10, 1, 10, 1,  42 );
 
-	dragon.afficher();
-	cout << "se prépare au combat avec :" << endl;
-	hydre.afficher();
+  dragon.afficher();
+  cout << "se prÃ©pare au combat avec :" << endl;
+  hydre.afficher();
 
-	cout << endl;
-	cout << "1er combat :" << endl;
-	cout << "    les créatures ne sont pas à portée, donc ne peuvent pas s'attaquer."
-		<< endl;
-	combat(dragon, hydre);
+  cout << endl;
+  cout << "1er combat :" << endl;
+  cout << "    les crÃ©atures ne sont pas Ã  portÃ©e, donc ne peuvent pas s'attaquer."
+       << endl;
+  combat(dragon, hydre);
 
-	cout << "Après le combat :" << endl;
-	dragon.afficher();
-	hydre.afficher();
+  cout << "AprÃ¨s le combat :" << endl;
+  dragon.afficher();
+  hydre.afficher();
 
-	cout << endl;
-	cout << "Le dragon vole à proximité de l'hydre :" << endl;
-	dragon.voler(hydre.position() - 1);
-	dragon.afficher();
+  cout << endl;
+  cout << "Le dragon vole Ã  proximitÃ© de l'hydre :" << endl;
+  dragon.voler(hydre.position() - 1);
+  dragon.afficher();
 
-	cout << endl;
-	cout << "L'hydre recule d'un pas :" << endl;
-	hydre.deplacer(1);
-	hydre.afficher();
+  cout << endl;
+  cout << "L'hydre recule d'un pas :" << endl;
+  hydre.deplacer(1);
+  hydre.afficher();
 
-	cout << endl;
-	cout << "2e combat :" << endl;
-	cout << "\
+  cout << endl;
+  cout << "2e combat :" << endl;
+  cout << "\
   + l'hydre inflige au dragon une attaque de 3 points\n\
       [ niveau (2) * force (1) + poison (1) = 3 ] ;\n\
-  + le dragon inflige à l'hydre une attaque de 6 points\n\
+  + le dragon inflige Ã  l'hydre une attaque de 6 points\n\
       [ niveau (2) * force (3) = 6 ] ;\n\
-  + pendant son attaque, le dragon perd 2 points de vie supplémentaires\n\
-       [ correspondant à la distance entre le dragon et l'hydre : 43 - 41 = 2 ].\
+  + pendant son attaque, le dragon perd 2 points de vie supplÃ©mentaires\n\
+       [ correspondant Ã  la distance entre le dragon et l'hydre : 43 - 41 = 2 ].\
 " << endl;
-	combat(dragon, hydre);
+  combat(dragon, hydre);
 
-	cout << "Après le combat :" << endl;
-	dragon.afficher();
-	hydre.afficher();
+  cout << "AprÃ¨s le combat :" << endl;
+  dragon.afficher();
+  hydre.afficher();
 
-	cout << endl;
-	cout << "Le dragon avance d'un pas :" << endl;
-	dragon.deplacer(1);
-	dragon.afficher();
+  cout << endl;
+  cout << "Le dragon avance d'un pas :" << endl;
+  dragon.deplacer(1);
+  dragon.afficher();
 
-	cout << endl;
-	cout << "3e combat :" << endl;
-	cout << "\
+  cout << endl;
+  cout << "3e combat :" << endl;
+  cout << "\
   + l'hydre inflige au dragon une attaque de 3 points\n\
       [ niveau (2) * force (1) + poison (1) = 3 ] ;\n\
-  + le dragon inflige à l'hydre une attaque de 6 points\n\
+  + le dragon inflige Ã  l'hydre une attaque de 6 points\n\
       [ niveau (2) * force (3) = 6 ] ;\n\
-  + pendant son attaque, le dragon perd 1 point de vie supplémentaire\n\
-       [ correspondant à la distance entre le dragon et l'hydre : 43 - 42 = 1 ] ;\n\
+  + pendant son attaque, le dragon perd 1 point de vie supplÃ©mentaire\n\
+       [ correspondant Ã  la distance entre le dragon et l'hydre : 43 - 42 = 1 ] ;\n\
   + l'hydre est vaincue et le dragon monte au niveau 3.\
 " << endl;
-	combat(dragon, hydre);
+  combat(dragon, hydre);
 
-	cout << "Après le combat :" << endl;
-	dragon.afficher();
-	hydre.afficher();
+  cout << "AprÃ¨s le combat :" << endl;
+  dragon.afficher();
+  hydre.afficher();
 
-	cout << endl;
-	cout << "4e Combat :" << endl;
-	cout << "    quand une créature est vaincue, rien ne se passe." << endl;
-	combat(dragon, hydre);
+  cout << endl;
+  cout << "4e Combat :" << endl;
+  cout << "    quand une crÃ©ature est vaincue, rien ne se passe." << endl;
+  combat(dragon, hydre);
 
-	cout << "Après le combat :" << endl;
-	dragon.afficher();
-	hydre.afficher();
+  cout << "AprÃ¨s le combat :" << endl;
+  dragon.afficher();
+  hydre.afficher();
 
-	return 0;
+  return 0;
 }
